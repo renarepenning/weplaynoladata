@@ -14035,14 +14035,13 @@ When convinient, we will export notebooks to Google Colabs to support simultaneo
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Imports, as needed</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="c1">## Imports, as needed</span>
-<span class="c1">#!head ../notebooks/_data/WePLAYData/</span>
-<span class="o">!</span>pip3 install openpyxl # followed error messages to install openpyxl package
+<span class="o">!</span>pip3 install openpyxl # package to open xlsx files
 </pre></div>
 
      </div>
@@ -14062,13 +14061,9 @@ When convinient, we will export notebooks to Google Colabs to support simultaneo
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Collecting openpyxl
-  Downloading openpyxl-3.0.9-py2.py3-none-any.whl (242 kB)
-     |████████████████████████████████| 242 kB 3.3 MB/s eta 0:00:01
-Collecting et-xmlfile
-  Downloading et_xmlfile-1.1.0-py3-none-any.whl (4.7 kB)
-Installing collected packages: et-xmlfile, openpyxl
-Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
+<pre>Requirement already satisfied: openpyxl in /opt/conda/lib/python3.9/site-packages (3.0.9)
+Requirement already satisfied: et-xmlfile in /opt/conda/lib/python3.9/site-packages (from openpyxl) (1.1.0)
+/home/jovyan/notebooks
 </pre>
 </div>
 </div>
@@ -14077,16 +14072,31 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h5 id="Importing-data">Importing data<a class="anchor-link" href="#Importing-data">&#182;</a></h5>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[44]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fam_survey</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../notebooks/_data/WePlayData/WPCFamilySurvey.xlsx&quot;</span><span class="p">)</span>
-<span class="n">fam_survey</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;../notebooks/_data/WePlayData/CleanedWPC&quot;</span>
 
-<span class="c1">## This dataset has many more values than entries, and cannot be effectively tidied as the key is Respondent ID</span>
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;IncomingParentReflection&#39;</span><span class="p">,</span> 
+        <span class="s2">&quot;IncomingParentReflection-July2019&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;IncomingParentReflection-November2019&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;FamilySurvey&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;IncomingParentReflectionForm2020&quot;</span><span class="p">,]</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;IPR_&#39;</span><span class="p">,</span> <span class="s1">&#39;IPR_Jul19&#39;</span><span class="p">,</span> <span class="s1">&#39;IPR_Nov19&#39;</span><span class="p">,</span> <span class="s1">&#39;FamSurv&#39;</span><span class="p">,</span> <span class="s1">&#39;IPR_form20&#39;</span><span class="p">,]</span>
+<span class="n">df_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">df_dict</span><span class="p">[</span><span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.xlsx&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </pre></div>
 
      </div>
@@ -14102,7 +14112,280 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>dict_keys([&#39;IPR_&#39;, &#39;IPR_Jul19&#39;, &#39;IPR_Nov19&#39;, &#39;FamSurv&#39;])
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[49]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># no clue why this isn&#39;t working</span>
+<span class="c1"># x = pd.read_excel(&quot;../notebooks/_data/WePlayData/CleanedWPCIncomingParentReflectionForm2020.xlsx&quot;)</span>
+
+<span class="c1">#this works?</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;../notebooks/_data/WePlayData/CleanedWPCIncomingParentReflection.xlsx&#39;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="ETL">ETL<a class="anchor-link" href="#ETL">&#182;</a></h1>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Family-Survey-Data">Family Survey Data<a class="anchor-link" href="#Family-Survey-Data">&#182;</a></h3>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h5 id="First-third:-Responses-about-the-adults">First third: Responses about the adults<a class="anchor-link" href="#First-third:-Responses-about-the-adults">&#182;</a></h5><p>Adults means over 19
+Children means under 18</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[92]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">familySurveyDf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;FamilySurvey&quot;</span> <span class="o">+</span> <span class="s2">&quot;.xlsx&quot;</span><span class="p">)</span>
+<span class="c1"># &quot;Resp&quot; = Respondant</span>
+<span class="n">adult_FD</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">adult_FD</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Resp_Gender&quot;</span><span class="p">,</span> <span class="s2">&quot;Resp_Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Resp_Race&quot;</span><span class="p">,</span> <span class="s2">&quot;Adults&quot;</span><span class="p">,</span> <span class="s2">&quot;Children&quot;</span><span class="p">,</span> <span class="s2">&quot;Zip&quot;</span><span class="p">,</span> <span class="s2">&quot;OMIT&quot;</span><span class="p">,</span> <span class="s2">&quot;Avg_Income&quot;</span><span class="p">,</span> <span class="s2">&quot;highest_edu&quot;</span><span class="p">,</span> <span class="s2">&quot;visits_Monthly&quot;</span><span class="p">]]</span>
+<span class="n">adult_FD</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;OMIT&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">adult_FD</span>
+
+<span class="c1">## DF with info on how they found WPC</span>
+<span class="n">how_found_WPC</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">10</span><span class="p">:</span><span class="mi">17</span><span class="p">]</span>
+<span class="n">how_found_WPC</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Sign/Poster/flyer&quot;</span><span class="p">,</span> <span class="s2">&quot;Friend&quot;</span><span class="p">,</span> <span class="s2">&quot;Website&quot;</span><span class="p">,</span> <span class="s2">&quot;Social Media&quot;</span><span class="p">,</span> <span class="s2">&quot;Other org&quot;</span><span class="p">,</span> <span class="s2">&quot;Lafitte Fauborg Housing Office&quot;</span><span class="p">,</span> <span class="s2">&quot;Other&quot;</span><span class="p">]]</span>
+<span class="n">how_found_WPC</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>/opt/conda/lib/python3.9/site-packages/pandas/core/generic.py:4150: PerformanceWarning: dropping on a non-lexsorted multi-index without a level parameter may impact performance.
+  obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[92]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Sign/Poster/flyer</th>
+      <th>Friend</th>
+      <th>Website</th>
+      <th>Social Media</th>
+      <th>Other org</th>
+      <th>Lafitte Fauborg Housing Office</th>
+      <th>Other</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Sign, poster, flyer</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Social Media (facebook, Twitter, Instagram)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Lafitte Fauborg Housing Office</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Sign, poster, flyer</td>
+      <td>Friend</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Sign, poster, flyer</td>
+      <td>Friend</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>NaN</td>
+      <td>Friend</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Website</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>NaN</td>
+      <td>Friend</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Baby Cafe</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>NaN</td>
+      <td>Friend</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>NaN</td>
+      <td>Friend</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>63 rows × 7 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[93]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">child_FD</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">17</span><span class="p">:]</span>
+<span class="c1"># combined 18/19 into 17 manually</span>
+
+<span class="n">child_FD</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[93]:</div>
 
 
 
@@ -14125,18 +14408,18 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Respondent ID</th>
-      <th>Collector ID</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-      <th>IP Address</th>
-      <th>Email Address</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Custom Data 1</th>
-      <th>What is your gender?</th>
+      <th>Please select the options that best describe the child(ren) you bring to the We PLAY Center (please be sure to scroll down to see all available choices for each question)</th>
+      <th>Unnamed: 18</th>
+      <th>Unnamed: 19</th>
+      <th>Unnamed: 20</th>
+      <th>Unnamed: 21</th>
+      <th>Unnamed: 22</th>
+      <th>Unnamed: 23</th>
+      <th>Please share the number of days in a typical week that you engage in the following activities</th>
+      <th>Unnamed: 25</th>
+      <th>Unnamed: 26</th>
       <th>...</th>
-      <th>Unnamed: 64</th>
+      <th>Unnamed: 52</th>
       <th>In a typical week, about how much time does your child engage in active indoor play?</th>
       <th>In a typical week, about how much time does your child engage in quiet indoor play?</th>
       <th>In a typical week, about how much time does your child engage in outdoor play?</th>
@@ -14144,47 +14427,23 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
       <th>What aspect of the We PLAY Center do you find most helpful?</th>
       <th>Would you recommend a family or friend to the We PLAY Center?</th>
       <th>Name</th>
-      <th>Unnamed: 72</th>
+      <th>Unnamed: 60</th>
       <th>Date</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaT</td>
-      <td>NaT</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Response</td>
-      <td>...</td>
-      <td>Has your child exhibited an increase in age-ap...</td>
-      <td>Hours (approximate)</td>
-      <td>Hours (approximate)</td>
-      <td>Hours (approximate)</td>
-      <td>Open-Ended Response</td>
-      <td>Open-Ended Response</td>
-      <td>Response</td>
-      <td>First Name</td>
-      <td>Last Name</td>
-      <td>Date</td>
-    </tr>
-    <tr>
       <th>1</th>
-      <td>1.092363e+10</td>
-      <td>225003849.0</td>
-      <td>2019-08-13 14:16:22</td>
-      <td>2019-08-13 14:20:25</td>
-      <td>107.77.249.48</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>Female</td>
+      <td>0-6 months</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Parent</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Never</td>
+      <td>Every day</td>
+      <td>Every day</td>
       <td>...</td>
       <td>Mostly agree</td>
       <td>NaN</td>
@@ -14199,16 +14458,16 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
     </tr>
     <tr>
       <th>2</th>
-      <td>1.092340e+10</td>
-      <td>225003849.0</td>
-      <td>2019-08-13 12:43:30</td>
-      <td>2019-08-13 12:52:16</td>
-      <td>172.56.26.76</td>
+      <td>Male</td>
+      <td>19-24 months</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>Parent</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>Female</td>
+      <td>Every day</td>
+      <td>Every day</td>
+      <td>Every day</td>
       <td>...</td>
       <td>NaN</td>
       <td>7</td>
@@ -14223,16 +14482,16 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
     </tr>
     <tr>
       <th>3</th>
-      <td>1.092099e+10</td>
-      <td>225003849.0</td>
-      <td>2019-08-12 12:27:33</td>
-      <td>2019-08-12 12:34:37</td>
-      <td>107.77.249.48</td>
+      <td>Male</td>
+      <td>25-36 months</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>Female</td>
+      <td>NaN</td>
+      <td>1-2 days</td>
+      <td>Every day</td>
+      <td>Every day</td>
       <td>...</td>
       <td>Neither disagree nor agree</td>
       <td>12</td>
@@ -14247,195 +14506,16 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
     </tr>
     <tr>
       <th>4</th>
-      <td>1.092099e+10</td>
-      <td>225003849.0</td>
-      <td>2019-08-12 11:48:15</td>
-      <td>2019-08-12 12:26:53</td>
-      <td>107.77.249.48</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 74 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># This set has the same issues</span>
-<span class="n">incoming_reflection</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../notebooks/_data/WePlayData/WPCIncomingParentReflection.xlsx&quot;</span><span class="p">)</span>
-<span class="n">incoming_reflection</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Respondent ID</th>
-      <th>Collector ID</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-      <th>IP Address</th>
-      <th>Email Address</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Custom Data 1</th>
-      <th>What is your gender?</th>
-      <th>...</th>
-      <th>Unnamed: 122</th>
-      <th>Unnamed: 123</th>
-      <th>Unnamed: 124</th>
-      <th>Unnamed: 125</th>
-      <th>Unnamed: 126</th>
-      <th>Unnamed: 127</th>
-      <th>Would you recommend the We PLAY Center to a family or friend?</th>
-      <th>Are there any additional comments you would like to share with the We PLAY Center?</th>
-      <th>First Name.1</th>
-      <th>Last Name.1</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaT</td>
-      <td>NaT</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Response</td>
-      <td>...</td>
-      <td>Website</td>
-      <td>Social Media (facebook, Twitter, Instagram)</td>
-      <td>Another organization (Kingsley House, Healthy ...</td>
-      <td>Lafitte Fauborg Housing Office</td>
-      <td>We PLAY Center Staff</td>
-      <td>Other (please specify)</td>
-      <td>Response</td>
-      <td>Open-Ended Response</td>
-      <td>Open-Ended Response</td>
-      <td>Open-Ended Response</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1.127194e+10</td>
-      <td>244233757.0</td>
-      <td>2020-01-13 17:42:45</td>
-      <td>2020-01-13 18:19:24</td>
-      <td>98.163.225.126</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>From picking up School Supplies for my other 2...</td>
-      <td>Yes</td>
-      <td>NaN</td>
-      <td>Stacy</td>
-      <td>Harris</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1.123680e+10</td>
-      <td>244233757.0</td>
-      <td>2019-12-20 11:38:37</td>
-      <td>2019-12-20 11:43:06</td>
-      <td>70.186.98.87</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Yes</td>
-      <td>NaN</td>
-      <td>Jessica</td>
-      <td>Winters</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1.123251e+10</td>
-      <td>244233757.0</td>
-      <td>2019-12-18 15:03:02</td>
-      <td>2019-12-18 15:06:43</td>
-      <td>72.211.124.135</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>Male</td>
+      <td>25-36 months</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Parent</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -14443,644 +14523,182 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>Yes</td>
       <td>NaN</td>
-      <td>Oliver</td>
-      <td>Wise</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>1.117937e+10</td>
-      <td>244233757.0</td>
-      <td>2019-11-27 15:07:54</td>
-      <td>2019-11-27 15:11:54</td>
-      <td>107.77.200.18</td>
+      <th>5</th>
+      <td>Male</td>
+      <td>13-18 months</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>Parent</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Every day</td>
+      <td>Every day</td>
+      <td>Every day</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>30</td>
+      <td>15</td>
+      <td>20</td>
+      <td>Friendly staff, fun space</td>
+      <td>Interactive space outside the house that is st...</td>
+      <td>Yes</td>
+      <td>Noah</td>
+      <td>Cohen</td>
+      <td>07/31/2019</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>Male</td>
+      <td>13-18 months</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>Female</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Every day</td>
+      <td>Every day</td>
+      <td>Every day</td>
       <td>...</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>40</td>
+      <td>10</td>
+      <td>5</td>
+      <td>Location, staff, other children</td>
+      <td>Ease of access</td>
       <td>Yes</td>
-      <td>Please open on the weekends!</td>
       <td>Megan</td>
-      <td>Washack</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 132 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">incoming_reflection_July19</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../notebooks/_data/WePlayData/WPCIncomingParentReflection-July2019.xlsx&quot;</span><span class="p">)</span>
-<span class="n">incoming_reflection_July19</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Respondent ID</th>
-      <th>Collector ID</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-      <th>IP Address</th>
-      <th>Email Address</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Custom Data 1</th>
-      <th>What is your gender?</th>
-      <th>...</th>
-      <th>Unnamed: 163</th>
-      <th>Unnamed: 164</th>
-      <th>Unnamed: 165</th>
-      <th>Unnamed: 166</th>
-      <th>Unnamed: 167</th>
-      <th>Would you recommend the We PLAY Center to a family or friend?</th>
-      <th>Do you have any feedback on how the We PLAY Center can improve this Parent Reflection Form?  Your feedback will used to modify this form and guide the development of future forms.</th>
-      <th>Are there any additional comments you would like to share with the We PLAY Center?</th>
-      <th>First Name.1</th>
-      <th>Last Name.1</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaT</td>
-      <td>NaT</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Response</td>
-      <td>...</td>
-      <td>Website</td>
-      <td>Social Media (facebook, Twitter, Instagram)</td>
-      <td>Another organization (Kingsley House, Healthy ...</td>
-      <td>Lafitte Fauborg Housing Office</td>
-      <td>Other (please specify)</td>
-      <td>Response</td>
-      <td>Open-Ended Response</td>
-      <td>Open-Ended Response</td>
-      <td>Open-Ended Response</td>
-      <td>Open-Ended Response</td>
+      <td>Walker</td>
+      <td>01/31/2019</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>1.097254e+10</td>
-      <td>242461998.0</td>
-      <td>2019-09-05 18:11:49</td>
-      <td>2019-09-05 18:24:24</td>
-      <td>63.249.72.114</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1.093646e+10</td>
-      <td>242461998.0</td>
-      <td>2019-08-20 07:09:08</td>
-      <td>2019-08-20 07:22:17</td>
-      <td>72.211.114.28</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Yes</td>
-      <td>NaN</td>
-      <td>You all have been such an important and valuab...</td>
-      <td>Deidre</td>
-      <td>Gantt</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1.091339e+10</td>
-      <td>242461998.0</td>
-      <td>2019-08-08 11:44:40</td>
-      <td>2019-08-08 11:58:47</td>
-      <td>72.204.146.32</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Yes</td>
-      <td>NaN</td>
-      <td>You all are the best! The staff is amazing. I’...</td>
-      <td>Annie</td>
-      <td>Miklavcic</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1.091316e+10</td>
-      <td>242884281.0</td>
-      <td>2019-08-08 10:33:01</td>
-      <td>2019-08-08 10:44:29</td>
-      <td>72.205.182.40</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>60</th>
       <td>Male</td>
+      <td>7-12 months</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Parent</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3-6 days</td>
+      <td>Every day</td>
+      <td>Every day</td>
       <td>...</td>
-      <td>Website</td>
-      <td>Social Media (facebook, Twitter, Instagram)</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>20</td>
+      <td>10</td>
+      <td>3</td>
+      <td>We plan to attend regularly so our baby can so...</td>
+      <td>It's open more than one day, so that's easier ...</td>
       <td>Yes</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>John</td>
-      <td>Abadie</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 173 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">incoming_reflection_Nov19</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../notebooks/_data/WePlayData/WPCIncomingParentReflection-November2019.xlsx&quot;</span><span class="p">)</span>
-<span class="n">incoming_reflection_Nov19</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Respondent ID</th>
-      <th>Collector ID</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-      <th>IP Address</th>
-      <th>Email Address</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Custom Data 1</th>
-      <th>What is your gender?</th>
-      <th>...</th>
-      <th>Unnamed: 170</th>
-      <th>Unnamed: 171</th>
-      <th>Unnamed: 172</th>
-      <th>Unnamed: 173</th>
-      <th>Unnamed: 174</th>
-      <th>Would you recommend the We PLAY Center to a family or friend?</th>
-      <th>Do you have any feedback on how the We PLAY Center can improve this Parent Reflection Form?  Your feedback will used to modify this form and guide the development of future forms.</th>
-      <th>Are there any additional comments you would like to share with the We PLAY Center?</th>
-      <th>First Name.1</th>
-      <th>Last Name.1</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaT</td>
-      <td>NaT</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Response</td>
-      <td>...</td>
-      <td>Social Media (facebook, Twitter, Instagram)</td>
-      <td>Another organization (Kingsley House, Healthy ...</td>
-      <td>Lafitte Fauborg Housing Office</td>
-      <td>We PLAY Center Staff</td>
-      <td>Other (please specify)</td>
-      <td>Response</td>
-      <td>Open-Ended Response</td>
-      <td>Open-Ended Response</td>
-      <td>Open-Ended Response</td>
-      <td>Open-Ended Response</td>
+      <td>Yve</td>
+      <td>Labbe</td>
+      <td>01/31/2019</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>1.121566e+10</td>
-      <td>249828299.0</td>
-      <td>2019-12-11 18:52:26</td>
-      <td>2019-12-11 19:28:39</td>
-      <td>70.180.70.217</td>
-      <td>raklasing58@gmail.com</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Dcfs staff</td>
-      <td>Yes</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Roberta</td>
-      <td>Klasing</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1.120736e+10</td>
-      <td>249828299.0</td>
-      <td>2019-12-09 10:28:23</td>
-      <td>2019-12-09 10:35:47</td>
-      <td>99.203.155.230</td>
-      <td>christopherbenz@gmail.com</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>61</th>
       <td>Male</td>
+      <td>37 months or more</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Parent</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>Yes</td>
       <td>NaN</td>
-      <td>Thanks for existing!</td>
-      <td>christopher</td>
-      <td>benz</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1.118977e+10</td>
-      <td>249828299.0</td>
-      <td>2019-12-02 16:37:16</td>
-      <td>2019-12-02 16:45:41</td>
-      <td>72.198.183.180</td>
-      <td>joanna.x.russo@gmail.com</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Yes</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>1.116087e+10</td>
-      <td>248173257.0</td>
-      <td>2019-11-20 14:44:16</td>
-      <td>2019-11-20 14:46:17</td>
-      <td>172.58.101.23</td>
+      <th>62</th>
+      <td>Male</td>
+      <td>25-36 months</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>Parent</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>Female</td>
+      <td>Every day</td>
+      <td>Every day</td>
+      <td>Every day</td>
       <td>...</td>
       <td>NaN</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>Tye environment is warm and welcoming! Melanie...</td>
+      <td>All of it!</td>
+      <td>Yes</td>
+      <td>Jade</td>
+      <td>George</td>
+      <td>01/31/2019</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>Male</td>
+      <td>13-18 months</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>Parent</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>3-6 days</td>
+      <td>3-6 days</td>
+      <td>Every day</td>
+      <td>...</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>12</td>
+      <td>1</td>
+      <td>2</td>
+      <td>The opportunity for my child to engage with ot...</td>
+      <td>The ability to allow my child to engage in pla...</td>
+      <td>Yes</td>
+      <td>Ashley</td>
+      <td>Comegys</td>
+      <td>01/31/2019</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 180 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">incoming_reflection2020</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">&quot;../notebooks/_data/WePlayData/CopyofTheWePLAYCenterIncomingParentReflectionForm2020.xlsx&quot;</span><span class="p">)</span>
-<span class="n">incoming_reflection2020</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Respondent ID</th>
-      <th>Collector ID</th>
-      <th>Start Date</th>
-      <th>End Date</th>
-      <th>IP Address</th>
-      <th>Email Address</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Custom Data 1</th>
-      <th>What is your gender?</th>
-      <th>...</th>
-      <th>Unnamed: 122</th>
-      <th>Unnamed: 123</th>
-      <th>Unnamed: 124</th>
-      <th>Unnamed: 125</th>
-      <th>Unnamed: 126</th>
-      <th>Unnamed: 127</th>
-      <th>Would you recommend the We PLAY Center to a family or friend?</th>
-      <th>Are there any additional comments you would like to share with the We PLAY Center?</th>
-      <th>First Name.1</th>
-      <th>Last Name.1</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaT</td>
-      <td>NaT</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Response</td>
-      <td>...</td>
-      <td>Website</td>
-      <td>Social Media (facebook, Twitter, Instagram)</td>
-      <td>Another organization (Kingsley House, Healthy ...</td>
-      <td>Lafitte Fauborg Housing Office</td>
-      <td>We PLAY Center Staff</td>
-      <td>Other (please specify)</td>
-      <td>Response</td>
-      <td>Open-Ended Response</td>
-      <td>Open-Ended Response</td>
-      <td>Open-Ended Response</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1.139259e+10</td>
-      <td>252542815.0</td>
-      <td>2020-03-04 14:30:44</td>
-      <td>2020-03-04 14:37:00</td>
-      <td>99.203.26.135</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Yes</td>
-      <td>NaN</td>
-      <td>Siera</td>
-      <td>Tafoya</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1.136253e+10</td>
-      <td>252542815.0</td>
-      <td>2020-02-21 10:46:37</td>
-      <td>2020-02-21 10:49:59</td>
-      <td>72.211.115.231</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Yes</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1.135788e+10</td>
-      <td>252542815.0</td>
-      <td>2020-02-19 16:33:15</td>
-      <td>2020-02-19 16:38:13</td>
-      <td>184.176.223.214</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Yes</td>
-      <td>NaN</td>
-      <td>Lydia</td>
-      <td>Nichols</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1.135497e+10</td>
-      <td>252542815.0</td>
-      <td>2020-02-18 16:11:12</td>
-      <td>2020-02-18 16:35:56</td>
-      <td>98.164.79.160</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 132 columns</p>
+<p>63 rows × 45 columns</p>
 </div>
 </div>
 
@@ -15093,14 +14711,27 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="ETL">ETL<a class="anchor-link" href="#ETL">&#182;</a></h1>
+<h3 id="Incoming-Parent-Reflections">Incoming Parent Reflections<a class="anchor-link" href="#Incoming-Parent-Reflections">&#182;</a></h3>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Issues .....</p>
 
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -15112,36 +14743,8 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># automatically create index.html</span>
-<span class="c1"># convert this file to HTML</span>
-<span class="o">!</span>jupyter nbconvert --to html MilestoneTwo.ipynb
-
-<span class="c1"># Delete old index.html</span>
-<span class="o">!</span>rm index.html
-<span class="c1"># move MilestoneTwo.html to index.html</span>
-<span class="o">!</span>mv MilestoneTwo.html index.html
-
-<span class="c1"># Check files</span>
-<span class="o">!</span>ls
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Push to Rena&#39;s repo</span>
-<span class="o">!</span>git config --global user.name <span class="s2">&quot;renarepenning&quot;</span>
-<span class="o">!</span>git config --global user.email <span class="s2">&quot;rrepenning@tulane.edu&quot;</span>
-<span class="o">!</span>git add -A
-<span class="o">!</span>git commit -m <span class="s2">&quot;auto update index.html&quot;</span>
-<span class="o">!</span>git push
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># use gh-pages branch to display on rena&#39;s personal website</span>
+<span class="o">!</span>git checkout gh-pages
 </pre></div>
 
      </div>
@@ -15152,12 +14755,26 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Push after checking message</span>
-<span class="o">!</span>git push
-<span class="c1">## HOW DO I ADD MY USERNAME</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># automatically create index.html</span>
+<span class="c1"># convert this file to HTML</span>
+<span class="o">!</span>jupyter nbconvert --to html MilestoneTwo.ipynb
+
+<span class="c1"># Delete old index.html</span>
+<span class="o">!</span>rm index.html
+<span class="c1"># move MilestoneTwo.html to index.html</span>
+<span class="o">!</span>mv MilestoneTwo.html index.html
+
+<span class="c1"># Push to Rena&#39;s repo</span>
+<span class="o">!</span>git config --global user.name <span class="s2">&quot;renarepenning&quot;</span>
+<span class="o">!</span>git config --global user.email <span class="s2">&quot;rrepenning@tulane.edu&quot;</span>
+<span class="o">!</span>git add -A
+<span class="o">!</span>git commit -m <span class="s2">&quot;auto update index.html&quot;</span>
+
+<span class="c1"># !git push</span>
+<span class="c1"># must push manually?</span>
 </pre></div>
 
      </div>
@@ -15177,26 +14794,15 @@ Successfully installed et-xmlfile-1.1.0 openpyxl-3.0.9
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Username for &#39;https://github.com&#39;: </pre>
+<pre>[NbConvertApp] Converting notebook MilestoneTwo.ipynb to html
+[NbConvertApp] Writing 592685 bytes to MilestoneTwo.html
+_data  index.html  milestoneOne.ipynb  MilestoneTwo.ipynb  README.md
+</pre>
 </div>
 </div>
 
 </div>
 
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-     </div>
-</div>
-</div>
 </div>
 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
