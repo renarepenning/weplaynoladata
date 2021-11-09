@@ -18,9 +18,9 @@ ipython_config.py
 
 # End of https://www.toptal.com/developers/gitignore/api/jupyternotebooks
 
-
+/*
 ###
-GIT'S PYTHON TEMPLATE
+#GIT'S PYTHON TEMPLATE
 ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -151,3 +151,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+*/
