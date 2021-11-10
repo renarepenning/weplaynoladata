@@ -14009,6 +14009,13 @@ Melanie Richardson expressed a need for statistical evidence of We Play's import
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Methodology">Methodology<a class="anchor-link" href="#Methodology">&#182;</a></h3><p>First, we manually removed empty columns and rows from the five excel files.
+Then, we broke apart sheets to make data frames adressing a single concern.</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Collaboration-Plan">Collaboration Plan<a class="anchor-link" href="#Collaboration-Plan">&#182;</a></h3><p>Rena and Eddy will utilize this repository to simultaneously edit the project. 
 We plan on connecting over Zoom as needed and keeping constant communication over instant message. Also, we are both able to meet after class on Thursdays.
 When convinient, we will export notebooks to Google Colabs to support simultaneous editing. 
@@ -14032,16 +14039,34 @@ When convinient, we will export notebooks to Google Colabs to support simultaneo
 <p>Provided by Christine Neely from WePlay by Training Grounds nola. Data last accessed on October 25th.</p>
 
 </div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h5 id="Importing-data">Importing data<a class="anchor-link" href="#Importing-data">&#182;</a></h5>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[49]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Imports, as needed</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
 <span class="o">!</span>pip3 install openpyxl # package to open xlsx files
+
+<span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;../notebooks/_data/WePlayData/CleanedWPC&quot;</span> <span class="c1"># path to manually cleaned excels</span>
+
+<span class="c1">## possibly better for organization</span>
+<span class="c1"># files = [&#39;IncomingParentReflection&#39;, </span>
+<span class="c1">#         &quot;IncomingParentReflection-July2019&quot;, </span>
+<span class="c1">#         &quot;IncomingParentReflection-November2019&quot;,</span>
+<span class="c1">#         &quot;FamilySurvey&quot;, </span>
+<span class="c1">#         &quot;IncomingParentReflectionForm2020&quot;,]</span>
+<span class="c1"># keys = [&#39;IPR_&#39;, &#39;IPR_Jul19&#39;, &#39;IPR_Nov19&#39;, &#39;FamSurv&#39;, &#39;IPR_form20&#39;,]</span>
+<span class="c1"># df_dict = {}</span>
+<span class="c1"># for i in range(5):</span>
+<span class="c1">#     df_dict[keys[i]] = pd.read_excel(path + files[i] + &quot;.xlsx&quot;)</span>
+<span class="c1"># print(df_dict.keys())</span>
 </pre></div>
 
      </div>
@@ -14063,84 +14088,12 @@ When convinient, we will export notebooks to Google Colabs to support simultaneo
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>Requirement already satisfied: openpyxl in /opt/conda/lib/python3.9/site-packages (3.0.9)
 Requirement already satisfied: et-xmlfile in /opt/conda/lib/python3.9/site-packages (from openpyxl) (1.1.0)
-/home/jovyan/notebooks
 </pre>
 </div>
 </div>
 
 </div>
 
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="Importing-data">Importing data<a class="anchor-link" href="#Importing-data">&#182;</a></h5>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[44]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;../notebooks/_data/WePlayData/CleanedWPC&quot;</span>
-
-<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;IncomingParentReflection&#39;</span><span class="p">,</span> 
-        <span class="s2">&quot;IncomingParentReflection-July2019&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;IncomingParentReflection-November2019&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;FamilySurvey&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;IncomingParentReflectionForm2020&quot;</span><span class="p">,]</span>
-<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;IPR_&#39;</span><span class="p">,</span> <span class="s1">&#39;IPR_Jul19&#39;</span><span class="p">,</span> <span class="s1">&#39;IPR_Nov19&#39;</span><span class="p">,</span> <span class="s1">&#39;FamSurv&#39;</span><span class="p">,</span> <span class="s1">&#39;IPR_form20&#39;</span><span class="p">,]</span>
-<span class="n">df_dict</span> <span class="o">=</span> <span class="p">{}</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-    <span class="n">df_dict</span><span class="p">[</span><span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="n">files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.xlsx&quot;</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">df_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>dict_keys([&#39;IPR_&#39;, &#39;IPR_Jul19&#39;, &#39;IPR_Nov19&#39;, &#39;FamSurv&#39;])
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[49]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># no clue why this isn&#39;t working</span>
-<span class="c1"># x = pd.read_excel(&quot;../notebooks/_data/WePlayData/CleanedWPCIncomingParentReflectionForm2020.xlsx&quot;)</span>
-
-<span class="c1">#this works?</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s1">&#39;../notebooks/_data/WePlayData/CleanedWPCIncomingParentReflection.xlsx&#39;</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
 </div>
 
 </div>
@@ -14151,19 +14104,20 @@ Requirement already satisfied: et-xmlfile in /opt/conda/lib/python3.9/site-packa
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Family-Survey-Data">Family Survey Data<a class="anchor-link" href="#Family-Survey-Data">&#182;</a></h3>
+<h2 id="Family-Survey-Data">Family Survey Data<a class="anchor-link" href="#Family-Survey-Data">&#182;</a></h2>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h5 id="First-third:-Responses-about-the-adults">First third: Responses about the adults<a class="anchor-link" href="#First-third:-Responses-about-the-adults">&#182;</a></h5><p>Adults means over 19
+<h5 id="Responses-about-the-adults">Responses about the adults<a class="anchor-link" href="#Responses-about-the-adults">&#182;</a></h5><blockquote><p>Adults means over 19
 Children means under 18</p>
+</blockquote>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[92]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[47]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">familySurveyDf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;FamilySurvey&quot;</span> <span class="o">+</span> <span class="s2">&quot;.xlsx&quot;</span><span class="p">)</span>
@@ -14171,547 +14125,205 @@ Children means under 18</p>
 <span class="n">adult_FD</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:</span><span class="mi">10</span><span class="p">]</span>
 <span class="n">adult_FD</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Resp_Gender&quot;</span><span class="p">,</span> <span class="s2">&quot;Resp_Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Resp_Race&quot;</span><span class="p">,</span> <span class="s2">&quot;Adults&quot;</span><span class="p">,</span> <span class="s2">&quot;Children&quot;</span><span class="p">,</span> <span class="s2">&quot;Zip&quot;</span><span class="p">,</span> <span class="s2">&quot;OMIT&quot;</span><span class="p">,</span> <span class="s2">&quot;Avg_Income&quot;</span><span class="p">,</span> <span class="s2">&quot;highest_edu&quot;</span><span class="p">,</span> <span class="s2">&quot;visits_Monthly&quot;</span><span class="p">]]</span>
 <span class="n">adult_FD</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;OMIT&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">adult_FD</span>
 
-<span class="c1">## DF with info on how they found WPC</span>
-<span class="n">how_found_WPC</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">10</span><span class="p">:</span><span class="mi">17</span><span class="p">]</span>
-<span class="n">how_found_WPC</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Sign/Poster/flyer&quot;</span><span class="p">,</span> <span class="s2">&quot;Friend&quot;</span><span class="p">,</span> <span class="s2">&quot;Website&quot;</span><span class="p">,</span> <span class="s2">&quot;Social Media&quot;</span><span class="p">,</span> <span class="s2">&quot;Other org&quot;</span><span class="p">,</span> <span class="s2">&quot;Lafitte Fauborg Housing Office&quot;</span><span class="p">,</span> <span class="s2">&quot;Other&quot;</span><span class="p">]]</span>
-<span class="n">how_found_WPC</span>
+<span class="c1">#adult_FD</span>
 </pre></div>
 
      </div>
 </div>
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>/opt/conda/lib/python3.9/site-packages/pandas/core/generic.py:4150: PerformanceWarning: dropping on a non-lexsorted multi-index without a level parameter may impact performance.
-  obj = obj._drop_axis(labels, axis, level=level, errors=errors)
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[92]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead tr th {
-        text-align: left;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Sign/Poster/flyer</th>
-      <th>Friend</th>
-      <th>Website</th>
-      <th>Social Media</th>
-      <th>Other org</th>
-      <th>Lafitte Fauborg Housing Office</th>
-      <th>Other</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>Sign, poster, flyer</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Social Media (facebook, Twitter, Instagram)</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Lafitte Fauborg Housing Office</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Sign, poster, flyer</td>
-      <td>Friend</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Sign, poster, flyer</td>
-      <td>Friend</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>NaN</td>
-      <td>Friend</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>59</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Website</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>60</th>
-      <td>NaN</td>
-      <td>Friend</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>61</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Baby Cafe</td>
-    </tr>
-    <tr>
-      <th>62</th>
-      <td>NaN</td>
-      <td>Friend</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>63</th>
-      <td>NaN</td>
-      <td>Friend</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-<p>63 rows × 7 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[93]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">child_FD</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">17</span><span class="p">:]</span>
-<span class="c1"># combined 18/19 into 17 manually</span>
-
-<span class="n">child_FD</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[93]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Please select the options that best describe the child(ren) you bring to the We PLAY Center (please be sure to scroll down to see all available choices for each question)</th>
-      <th>Unnamed: 18</th>
-      <th>Unnamed: 19</th>
-      <th>Unnamed: 20</th>
-      <th>Unnamed: 21</th>
-      <th>Unnamed: 22</th>
-      <th>Unnamed: 23</th>
-      <th>Please share the number of days in a typical week that you engage in the following activities</th>
-      <th>Unnamed: 25</th>
-      <th>Unnamed: 26</th>
-      <th>...</th>
-      <th>Unnamed: 52</th>
-      <th>In a typical week, about how much time does your child engage in active indoor play?</th>
-      <th>In a typical week, about how much time does your child engage in quiet indoor play?</th>
-      <th>In a typical week, about how much time does your child engage in outdoor play?</th>
-      <th>What will keep you coming back to the We PLAY Center?</th>
-      <th>What aspect of the We PLAY Center do you find most helpful?</th>
-      <th>Would you recommend a family or friend to the We PLAY Center?</th>
-      <th>Name</th>
-      <th>Unnamed: 60</th>
-      <th>Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>Female</td>
-      <td>0-6 months</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Parent</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Never</td>
-      <td>Every day</td>
-      <td>Every day</td>
-      <td>...</td>
-      <td>Mostly agree</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Male</td>
-      <td>19-24 months</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Parent</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Every day</td>
-      <td>Every day</td>
-      <td>Every day</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>7</td>
-      <td>5</td>
-      <td>7</td>
-      <td>The positive staff and positive environment.</td>
-      <td>NaN</td>
-      <td>Yes</td>
-      <td>Xontownekiah</td>
-      <td>Ellison</td>
-      <td>08/13/2019</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Male</td>
-      <td>25-36 months</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1-2 days</td>
-      <td>Every day</td>
-      <td>Every day</td>
-      <td>...</td>
-      <td>Neither disagree nor agree</td>
-      <td>12</td>
-      <td>12</td>
-      <td>3</td>
-      <td>My kids love it there an I enjoy playing with ...</td>
-      <td>Different stuff</td>
-      <td>Yes</td>
-      <td>Megan</td>
-      <td>Nelson</td>
-      <td>08/12/2019</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Male</td>
-      <td>25-36 months</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Parent</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Male</td>
-      <td>13-18 months</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Parent</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Every day</td>
-      <td>Every day</td>
-      <td>Every day</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>30</td>
-      <td>15</td>
-      <td>20</td>
-      <td>Friendly staff, fun space</td>
-      <td>Interactive space outside the house that is st...</td>
-      <td>Yes</td>
-      <td>Noah</td>
-      <td>Cohen</td>
-      <td>07/31/2019</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>59</th>
-      <td>Male</td>
-      <td>13-18 months</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Female</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Every day</td>
-      <td>Every day</td>
-      <td>Every day</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>40</td>
-      <td>10</td>
-      <td>5</td>
-      <td>Location, staff, other children</td>
-      <td>Ease of access</td>
-      <td>Yes</td>
-      <td>Megan</td>
-      <td>Walker</td>
-      <td>01/31/2019</td>
-    </tr>
-    <tr>
-      <th>60</th>
-      <td>Male</td>
-      <td>7-12 months</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Parent</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>3-6 days</td>
-      <td>Every day</td>
-      <td>Every day</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>20</td>
-      <td>10</td>
-      <td>3</td>
-      <td>We plan to attend regularly so our baby can so...</td>
-      <td>It's open more than one day, so that's easier ...</td>
-      <td>Yes</td>
-      <td>Yve</td>
-      <td>Labbe</td>
-      <td>01/31/2019</td>
-    </tr>
-    <tr>
-      <th>61</th>
-      <td>Male</td>
-      <td>37 months or more</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Parent</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>62</th>
-      <td>Male</td>
-      <td>25-36 months</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Parent</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Every day</td>
-      <td>Every day</td>
-      <td>Every day</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>10</td>
-      <td>10</td>
-      <td>10</td>
-      <td>Tye environment is warm and welcoming! Melanie...</td>
-      <td>All of it!</td>
-      <td>Yes</td>
-      <td>Jade</td>
-      <td>George</td>
-      <td>01/31/2019</td>
-    </tr>
-    <tr>
-      <th>63</th>
-      <td>Male</td>
-      <td>13-18 months</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Parent</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>3-6 days</td>
-      <td>3-6 days</td>
-      <td>Every day</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>12</td>
-      <td>1</td>
-      <td>2</td>
-      <td>The opportunity for my child to engage with ot...</td>
-      <td>The ability to allow my child to engage in pla...</td>
-      <td>Yes</td>
-      <td>Ashley</td>
-      <td>Comegys</td>
-      <td>01/31/2019</td>
-    </tr>
-  </tbody>
-</table>
-<p>63 rows × 45 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-
 </div>
 
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Incoming-Parent-Reflections">Incoming Parent Reflections<a class="anchor-link" href="#Incoming-Parent-Reflections">&#182;</a></h3>
+<h4 id="Info-about-how-parents-found-the-we-play-center">Info about how parents found the we play center<a class="anchor-link" href="#Info-about-how-parents-found-the-we-play-center">&#182;</a></h4>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[48]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## DF with info on how they found WPC</span>
+<span class="n">how_found_WPC</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">10</span><span class="p">:</span><span class="mi">17</span><span class="p">]</span>
+<span class="n">how_found_WPC</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Sign/Poster/flyer&quot;</span><span class="p">,</span> <span class="s2">&quot;Friend&quot;</span><span class="p">,</span> <span class="s2">&quot;Website&quot;</span><span class="p">,</span> <span class="s2">&quot;Social Media&quot;</span><span class="p">,</span> <span class="s2">&quot;Other org&quot;</span><span class="p">,</span> <span class="s2">&quot;Lafitte Fauborg Housing Office&quot;</span><span class="p">,</span> <span class="s2">&quot;Other&quot;</span><span class="p">]]</span>
+
+<span class="c1">#~how_found_WPC.isna()  # Gives table of methods people used to find WPC</span>
+
+<span class="c1">##</span>
+<span class="c1">##  MAKE PIE CHARTS</span>
+<span class="c1">## </span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><strong>ADD PIE CHARTS HERE</strong></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h5 id="Misc-info-about-children-that-are-brought-to-the-weplay-center">Misc info about children that are brought to the weplay center<a class="anchor-link" href="#Misc-info-about-children-that-are-brought-to-the-weplay-center">&#182;</a></h5>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[45]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">child_FD</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">17</span><span class="p">:</span><span class="mi">24</span><span class="p">]</span> <span class="c1"># combined 18/19 into 17 manually</span>
+
+<span class="c1">#child_FD</span>
+
+<span class="c1">## this just tells gender and age of children + age of child 2, age child three</span>
+<span class="c1"># then relationship , relationship 2, other</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h5 id="%22Please-share-the-number-of-days-in-a-typical-week-that-you-engage-in-the-following-activities%22">"Please share the number of days in a typical week that you engage in the following activities"<a class="anchor-link" href="#%22Please-share-the-number-of-days-in-a-typical-week-that-you-engage-in-the-following-activities%22">&#182;</a></h5>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[43]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">daysActivitys_FD</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">24</span><span class="p">:</span><span class="mi">29</span><span class="p">]</span>
+<span class="n">daysActivitys_FD</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Read Stories&quot;</span><span class="p">,</span> <span class="s2">&quot;Play Music or Sing&quot;</span><span class="p">,</span> 
+                     <span class="s2">&quot;Engage in language building activities ie. babbling, cooing, talking&quot;</span><span class="p">,</span>
+                    <span class="s1">&#39;Engage in play&#39;</span><span class="p">,</span> <span class="s1">&#39;Create opportunities for your child to &quot;practice&quot; self control ie. rolling a ball back and forth, taking turns&#39;</span><span class="p">]</span>
+<span class="c1"># daysActivitys_FD</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h5 id="Please-state-how-strongly-you-agree-with-the-following-statements">Please state how strongly you agree with the following statements<a class="anchor-link" href="#Please-state-how-strongly-you-agree-with-the-following-statements">&#182;</a></h5>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[44]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">parenting_FD</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">29</span><span class="p">:</span><span class="mi">34</span><span class="p">]</span>
+<span class="n">parenting_FD</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I respond quickly to my child</span><span class="se">\&#39;</span><span class="s1">s cries&#39;</span><span class="p">,</span> <span class="s1">&#39;I am able to comfort my child when he/she is upset&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;I know the meaning of my child</span><span class="se">\&#39;</span><span class="s1">s signals (cry, turning away, rubbing eyes)&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;I step back and encourage my child to work through problems&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;I am able to follow my child</span><span class="se">\&#39;</span><span class="s1">s lead during playtime&#39;</span><span class="p">]</span>
+<span class="c1"># parenting_FD</span>
+ 
+ 
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="Parents-vary-in-how-they-discipline.-Below-are-some-strategies-parents-use-to-discipline-their-children.%C2%A0When-engaging-with-your-child-during-the-last-7-days,-which-strategies-have-you-used:">Parents vary in how they discipline. Below are some strategies parents use to discipline their children.&#160;When engaging with your child during the last 7 days, which strategies have you used:<a class="anchor-link" href="#Parents-vary-in-how-they-discipline.-Below-are-some-strategies-parents-use-to-discipline-their-children.%C2%A0When-engaging-with-your-child-during-the-last-7-days,-which-strategies-have-you-used:">&#182;</a></h4>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[35]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">discipline_FD</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">34</span><span class="p">:</span><span class="mi">42</span><span class="p">]</span>
+<span class="c1">#discipline_FD</span>
+
+<span class="c1">#will do later</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h4 id="The-We-PLAY-Center-strives-to-create-a-welcoming-environment.-Please-indicate-whether-you-agree-or-disagree-with-the-following-statements-about-the-We-PLAY-Center:">The We PLAY Center strives to create a welcoming environment. Please indicate whether you agree or disagree with the following statements about the We PLAY Center:<a class="anchor-link" href="#The-We-PLAY-Center-strives-to-create-a-welcoming-environment.-Please-indicate-whether-you-agree-or-disagree-with-the-following-statements-about-the-We-PLAY-Center:">&#182;</a></h4>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[39]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">environmentstatements_FD</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">42</span><span class="p">:</span><span class="mi">48</span><span class="p">]</span>
+<span class="c1">#environmentstatements_FD</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h5 id="Answer-if-you-have-attended-the-We-PLAY-Center-more-than-2-times.-As-a-result-of-attending-the-We-PLAY-Center-select-the-response-that-best-describes-how-you-feel.">Answer if you have attended the We PLAY Center more than 2 times. As a result of attending the We PLAY Center select the response that best describes how you feel.<a class="anchor-link" href="#Answer-if-you-have-attended-the-We-PLAY-Center-more-than-2-times.-As-a-result-of-attending-the-We-PLAY-Center-select-the-response-that-best-describes-how-you-feel.">&#182;</a></h5>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">48</span><span class="p">:</span><span class="mi">53</span><span class="p">]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h5 id="Play/center-+-name">Play/center + name<a class="anchor-link" href="#Play/center-+-name">&#182;</a></h5>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[42]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">familySurveyDf</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">53</span><span class="p">:]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Incoming-Parent-Reflections">Incoming Parent Reflections<a class="anchor-link" href="#Incoming-Parent-Reflections">&#182;</a></h2>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14737,10 +14349,10 @@ Children means under 18</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Automatic-updating-for-Git-Pages">Automatic updating for Git Pages<a class="anchor-link" href="#Automatic-updating-for-Git-Pages">&#182;</a></h1>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[94]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># use gh-pages branch to display on rena&#39;s personal website</span>
@@ -14752,10 +14364,39 @@ Children means under 18</p>
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>M	MilestoneTwo.ipynb
+M	_data/Copy of Copy of IMH Logic Model_Goal 1.doc.pdf
+M	_data/TrainingGrounds Background and Project.docx
+M	_data/UnCleaned_WePlayData/WPCIncomingParentReflection.xlsx
+M	_data/WePlayData/CleanedWPCFamilySurvey.xlsx
+M	_data/WePlayData/CleanedWPCIncomingParentReflectionForm2020.xlsx
+Already on &#39;gh-pages&#39;
+Your branch is ahead of &#39;origin/gh-pages&#39; by 1 commit.
+  (use &#34;git push&#34; to publish your local commits)
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[95]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># automatically create index.html</span>
@@ -14795,8 +14436,29 @@ Children means under 18</p>
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[NbConvertApp] Converting notebook MilestoneTwo.ipynb to html
-[NbConvertApp] Writing 592685 bytes to MilestoneTwo.html
-_data  index.html  milestoneOne.ipynb  MilestoneTwo.ipynb  README.md
+[NbConvertApp] Writing 586563 bytes to MilestoneTwo.html
+error: open(&#34;_data/Copy of Copy of IMH Logic Model_Goal 1.doc.pdf&#34;): No such file or directory
+error: unable to index file &#39;_data/Copy of Copy of IMH Logic Model_Goal 1.doc.pdf&#39;
+fatal: updating files failed
+On branch gh-pages
+Your branch is ahead of &#39;origin/gh-pages&#39; by 1 commit.
+  (use &#34;git push&#34; to publish your local commits)
+
+Changes not staged for commit:
+  (use &#34;git add &lt;file&gt;...&#34; to update what will be committed)
+  (use &#34;git restore &lt;file&gt;...&#34; to discard changes in working directory)
+	<span class="ansi-red-fg">modified:   MilestoneTwo.ipynb</span>
+	<span class="ansi-red-fg">modified:   _data/Copy of Copy of IMH Logic Model_Goal 1.doc.pdf</span>
+	<span class="ansi-red-fg">modified:   _data/TrainingGrounds Background and Project.docx</span>
+	<span class="ansi-red-fg">modified:   _data/UnCleaned_WePlayData/WPCIncomingParentReflection.xlsx</span>
+	<span class="ansi-red-fg">modified:   _data/WePlayData/CleanedWPCFamilySurvey.xlsx</span>
+	<span class="ansi-red-fg">modified:   index.html</span>
+
+Untracked files:
+  (use &#34;git add &lt;file&gt;...&#34; to include in what will be committed)
+	<span class="ansi-red-fg">_data/WePlayData/~$CleanedWPCFamilySurvey.xlsx</span>
+
+no changes added to commit (use &#34;git add&#34; and/or &#34;git commit -a&#34;)
 </pre>
 </div>
 </div>
