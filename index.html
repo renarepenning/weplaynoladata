@@ -15524,15 +15524,15 @@ These sections only had a few (omitted) answers besides those pictured.</p>
 <h1 id="Automatic-updating-for-Git-Pages">Automatic updating for Git Pages<a class="anchor-link" href="#Automatic-updating-for-Git-Pages">&#182;</a></h1><p>Use gh-pages branch to display on Rena's personal website</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[58]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># # make sure to push changes from main first!</span>
 <span class="c1"># !git checkout gh-pages</span>
-<span class="c1"># !git pull #update gh-pages with stuff from main</span>
+<span class="o">!</span>git pull #update gh-pages with stuff from main
 </pre></div>
 
      </div>
@@ -15540,15 +15540,36 @@ These sections only had a few (omitted) answers besides those pictured.</p>
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Already up to date.
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="automatically-create-index.html">automatically create index.html<a class="anchor-link" href="#automatically-create-index.html">&#182;</a></h3>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[59]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># convert this file to HTML</span>
@@ -15572,6 +15593,31 @@ These sections only had a few (omitted) answers besides those pictured.</p>
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[NbConvertApp] Converting notebook FinalTutorial.ipynb to html
+[NbConvertApp] Writing 968296 bytes to FinalTutorial.html
+[main 9682cf6] auto update index.html
+ 1 file changed, 15592 insertions(+), 18887 deletions(-)
+ rewrite index.html (72%)
+</pre>
+</div>
+</div>
+
+</div>
+
 </div>
 
 </div>
