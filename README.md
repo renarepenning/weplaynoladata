@@ -1,6 +1,6 @@
 # WePLAY Center by Training Grounds NOLA Survey Data
 
-![WPC logo](wpcLogo.jpeg)
+![WPClogo](wpcLogo.jpeg)
 
 ### https://renarepenning.github.io/weplaynoladata/
 
