@@ -1,5 +1,7 @@
 # WePLAY Center by Training Grounds NOLA Survey Data
 
+![WPC logo](wpcLogo.jpeg)
+
 ### https://renarepenning.github.io/weplaynoladata/
 
 Intro to Data Science (CMPS3160) Final Project. 
